@@ -69,6 +69,7 @@ def exec_into_pod_and_fetch_logs(pod_name):
     #cat will copy the contents of the provided log_path to the filepath created (localpath)
     command = f"kubectl exec {pod_name} -n {NAMESPACE} -- cat {log_path} > {local_path}"  
     subprocess.run(command, shell=True, check=False)        
+
 def check_resources(pod_name):
     """Check resource capacity and usage of individual pods and nodes"""
     node_resources = {

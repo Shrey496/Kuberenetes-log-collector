@@ -1,8 +1,0 @@
-
-=== pod_stats ===
-NAME                          READY   STATUS    RESTARTS   AGE   IP            NODE                                           NOMINATED NODE   READINESS GATES
-twistlock-defender-ds-t27ld   1/1     Running   0          34d   10.128.0.64   gke-shrey-console-console-pool-7ef50d5a-i9v1   <none>           <none>
-
-=== pod_resources ===
-NAME                          CPU(cores)   MEMORY(bytes)   
-twistlock-defender-ds-t27ld   9m           227Mi
