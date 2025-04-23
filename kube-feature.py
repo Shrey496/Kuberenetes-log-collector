@@ -69,16 +69,27 @@ def exec_into_pod_and_fetch_logs(pod_name):
     #cat will copy the contents of the provided log_path to the filepath created (localpath)
     command = f"kubectl exec {pod_name} -n {NAMESPACE} -- cat {log_path} > {local_path}"  
     subprocess.run(command, shell=True, check=False)        
-def check_resources():
-    """Check resource capacity and usage of pods and nodes"""
-    resources = {
-        "pod_stats": run_kubectl_command(f"kubectl get pods -o wide -n {NAMESPACE}"),
-        "pod_resources": run_kubectl_command(f"kubectl top pods -n {NAMESPACE}"),
+def check_resources(pod_name):
+    """Check resource capacity and usage of individual pods and nodes"""
+    node_resources = {
         "node_resources": run_kubectl_command("kubectl top nodes"),
-        "network_info": run_kubectl_command("kubectl get nodes -o wide"),  
+        "network_info": run_kubectl_command("kubectl get nodes -o wide")  
     }
-    with open(os.path.join(OUTPUT_DIR, "resource_usage.txt"), "w") as f:
-        for key, value in resources.items():
+    
+    LOGS_DIR = os.path.join(OUTPUT_DIR, pod_name)
+    os.makedirs(LOGS_DIR, exist_ok=True)
+    
+    pod_resources = {
+    "pod_stats": run_kubectl_command(f"kubectl get pod {pod_name} -o wide -n {NAMESPACE}"),
+    "pod_resources": run_kubectl_command(f"kubectl top pod {pod_name} -n {NAMESPACE}")
+    }
+    
+    with open(os.path.join(OUTPUT_DIR, "nodes_resource_usage.txt"),  "w") as f:
+        for key, value in node_resources.items():
+            f.write(f"\n=== {key} ===\n{value}\n")
+
+    with open(os.path.join(LOGS_DIR, "pod_resource_usage.txt"), "w") as f:
+        for key, value in pod_resources.items():
             f.write(f"\n=== {key} ===\n{value}\n")
 # def zip_results():
 #     """Zip all collected data"""
@@ -95,19 +106,16 @@ def main():
     if not twistlock_pods:
         print("No twistlock pods found in the namespace.")
         return 
-    pod_list = []
     for pod in twistlock_pods:
-        pod_list.append(pod)
         print(f"Processing pod: {pod}")
         pod_info = collect_pod_details(pod)
        
         # Save pod details to JSON file
         # with open(os.path.join(LOGS_DIR, f"{pod}_details.json"), "w") as f:
         #     json.dump(pod_info, f, indent=4)
-        
         exec_into_pod_and_fetch_logs(pod)
+        check_resources(pod)
     get_twistlock_daemonset()
-    check_resources()
     # zip_results()
 if __name__ == "__main__":
     main()
