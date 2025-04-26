@@ -5,7 +5,7 @@ import zipfile
 
 # Define output directories
 OUTPUT_DIR = "twistlock_diagnostics"
-NAMESPACE = "twistlock"
+NAMESPACE = "kube-system"
 def run_kubectl_command(command):
     """Run a kubectl command and return the output"""
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -25,7 +25,7 @@ def get_twistlock_pods():
         pod_data = json.loads(pods_json)
         #parsing the dictionary
         for p in pod_data["items"]:
-            if p["metadata"]["name"].startswith(NAMESPACE):
+            if p["metadata"]["name"]:
                 pod_list.append(p["metadata"]["name"])
         # print(pod_list)
         return pod_list
@@ -116,7 +116,7 @@ def main():
         # Save pod details to JSON file
         # with open(os.path.join(LOGS_DIR, f"{pod}_details.json"), "w") as f:
         #     json.dump(pod_info, f, indent=4)
-        exec_into_pod_and_fetch_logs(pod)
+        # exec_into_pod_and_fetch_logs(pod)
         check_resources(pod)
     get_twistlock_daemonset()
     # zip_results()

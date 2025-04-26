@@ -1,0 +1,8 @@
+
+=== pod_stats ===
+NAME                        READY   STATUS    RESTARTS   AGE   IP          NODE                                             NOMINATED NODE   READINESS GATES
+kube-dns-846659bdb8-nng7k   5/5     Running   0          10h   10.44.2.6   gke-aamir-defenders-default-pool-25eb8ef0-ltcu   <none>           <none>
+
+=== pod_resources ===
+NAME                        CPU(cores)   MEMORY(bytes)   
+kube-dns-846659bdb8-nng7k   2m           46Mi

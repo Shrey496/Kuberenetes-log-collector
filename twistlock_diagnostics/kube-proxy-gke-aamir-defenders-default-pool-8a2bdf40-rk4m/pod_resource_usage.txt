@@ -1,0 +1,8 @@
+
+=== pod_stats ===
+NAME                                                        READY   STATUS    RESTARTS   AGE   IP             NODE                                             NOMINATED NODE   READINESS GATES
+kube-proxy-gke-aamir-defenders-default-pool-8a2bdf40-rk4m   1/1     Running   0          11h   10.128.0.183   gke-aamir-defenders-default-pool-8a2bdf40-rk4m   <none>           <none>
+
+=== pod_resources ===
+NAME                                                        CPU(cores)   MEMORY(bytes)   
+kube-proxy-gke-aamir-defenders-default-pool-8a2bdf40-rk4m   1m           32Mi

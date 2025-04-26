@@ -1,0 +1,8 @@
+
+=== pod_stats ===
+NAME                      READY   STATUS    RESTARTS   AGE   IP             NODE                                             NOMINATED NODE   READINESS GATES
+gke-metrics-agent-wll8h   3/3     Running   0          10h   10.128.0.154   gke-aamir-defenders-default-pool-e573c1b7-nw9f   <none>           <none>
+
+=== pod_resources ===
+NAME                      CPU(cores)   MEMORY(bytes)   
+gke-metrics-agent-wll8h   2m           62Mi
