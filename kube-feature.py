@@ -16,6 +16,7 @@ def run_kubectl_command(command):
         return f"Error: {result.stderr.strip()}"
 def get_twistlock_pods():
     """Retrieve all pods in the twistlock namespace"""
+    # print(NAMESPACE)
     pods_json = run_kubectl_command(f"kubectl get pods -n {NAMESPACE} -o json")
     #print("Printing from the get_twistlock_pods function -- pods_json: ", pods_json)
     try:
@@ -26,6 +27,7 @@ def get_twistlock_pods():
         for p in pod_data["items"]:
             if p["metadata"]["name"].startswith(NAMESPACE):
                 pod_list.append(p["metadata"]["name"])
+        # print(pod_list)
         return pod_list
     except json.JSONDecodeError:
         print("Error parsing pod JSON data")

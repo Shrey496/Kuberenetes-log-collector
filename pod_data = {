@@ -1,0 +1,1187 @@
+pod_data = {
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2025-03-20T02:54:22Z",
+                "generateName": "twistlock-console-7b6cc56b55-",
+                "labels": {
+                    "name": "twistlock-console",
+                    "pod-template-hash": "7b6cc56b55"
+                },
+                "name": "twistlock-console-7b6cc56b55-pthdq",
+                "namespace": "twistlock",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "twistlock-console-7b6cc56b55",
+                        "uid": "c84f2bbb-db94-4c22-bcbb-d03f72bdc450"
+                    }
+                ],
+                "resourceVersion": "109344018",
+                "uid": "a6462f82-2d11-46cf-996e-103dcbf1cd4e"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "CONFIG_PATH",
+                                "value": "/data/config/twistlock.cfg"
+                            },
+                            {
+                                "name": "INTELLIGENCE_FEEDS_FOLDER",
+                                "value": "/var/lib/twistlock/saas_feeds"
+                            },
+                            {
+                                "name": "LOG_PROD",
+                                "value": "true"
+                            },
+                            {
+                                "name": "DATA_RECOVERY_ENABLED",
+                                "value": "true"
+                            },
+                            {
+                                "name": "COMMUNICATION_PORT",
+                                "value": "8084"
+                            },
+                            {
+                                "name": "MANAGEMENT_PORT_HTTPS",
+                                "value": "8083"
+                            },
+                            {
+                                "name": "MANAGEMENT_PORT_HTTP"
+                            },
+                            {
+                                "name": "DISABLE_LIMITS",
+                                "value": "false"
+                            },
+                            {
+                                "name": "FIPS_ENABLED",
+                                "value": "false"
+                            }
+                        ],
+                        "image": "registry-auth.twistlock.com/tw_qcom6ed9wqj3v10fmrl6auirqhewps56/twistlock/console:console_33_01_137",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "twistlock-console",
+                        "ports": [
+                            {
+                                "containerPort": 8083,
+                                "name": "mgmt-https",
+                                "protocol": "TCP"
+                            },
+                            {
+                                "containerPort": 8084,
+                                "name": "communication",
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "securityContext": {
+                            "readOnlyRootFilesystem": true
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/data/config/",
+                                "name": "twistlock-config-volume"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock",
+                                "name": "console-persistent-volume",
+                                "subPath": "var/lib/twistlock"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock-backup",
+                                "name": "console-persistent-volume",
+                                "subPath": "var/lib/twistlock-backup"
+                            },
+                            {
+                                "mountPath": "/dev/log",
+                                "name": "syslog-socket"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-x44pv",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "gke-shrey-console-console-pool-7ef50d5a-i9v1",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "twistlock-console",
+                "serviceAccountName": "twistlock-console",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "console-persistent-volume",
+                        "persistentVolumeClaim": {
+                            "claimName": "twistlock-console"
+                        }
+                    },
+                    {
+                        "configMap": {
+                            "defaultMode": 420,
+                            "name": "twistlock-console"
+                        },
+                        "name": "twistlock-config-volume"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/dev/log",
+                            "type": ""
+                        },
+                        "name": "syslog-socket"
+                    },
+                    {
+                        "name": "kube-api-access-x44pv",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:55:14Z",
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:54:22Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:55:14Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:55:14Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:54:22Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "containerd://3d683f480cf330f18d5062fb7f5983d1fa98a323dc4d224c4743453f9f905e40",
+                        "image": "registry-auth.twistlock.com/tw_qcom6ed9wqj3v10fmrl6auirqhewps56/twistlock/console:console_33_01_137",
+                        "imageID": "registry-auth.twistlock.com/tw_qcom6ed9wqj3v10fmrl6auirqhewps56/twistlock/console@sha256:cda8a0cd8b05ff202ffeac27b9ba8da24dca38d1b88994d42d63b97aac326cb3",
+                        "lastState": {},
+                        "name": "twistlock-console",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2025-03-20T02:55:13Z"
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/data/config/",
+                                "name": "twistlock-config-volume"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock",
+                                "name": "console-persistent-volume"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock-backup",
+                                "name": "console-persistent-volume"
+                            },
+                            {
+                                "mountPath": "/dev/log",
+                                "name": "syslog-socket"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-x44pv",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "10.128.0.64",
+                "hostIPs": [
+                    {
+                        "ip": "10.128.0.64"
+                    }
+                ],
+                "phase": "Running",
+                "podIP": "10.104.2.10",
+                "podIPs": [
+                    {
+                        "ip": "10.104.2.10"
+                    }
+                ],
+                "qosClass": "BestEffort",
+                "startTime": "2025-03-20T02:54:22Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "annotations": {
+                    "container.apparmor.security.beta.kubernetes.io/twistlock-defender": "unconfined"
+                },
+                "creationTimestamp": "2025-03-20T02:51:11Z",
+                "generateName": "twistlock-defender-ds-",
+                "labels": {
+                    "app": "twistlock-defender",
+                    "controller-revision-hash": "78854ddc76",
+                    "pod-template-generation": "1"
+                },
+                "name": "twistlock-defender-ds-t27ld",
+                "namespace": "twistlock",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "DaemonSet",
+                        "name": "twistlock-defender-ds",
+                        "uid": "3404598d-bbbb-472b-9adb-84f6555b2aa0"
+                    }
+                ],
+                "resourceVersion": "109341035",
+                "uid": "ca840e4a-e254-4cb8-af29-35b93bf7b6c0"
+            },
+            "spec": {
+                "affinity": {
+                    "nodeAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                            "nodeSelectorTerms": [
+                                {
+                                    "matchFields": [
+                                        {
+                                            "key": "metadata.name",
+                                            "operator": "In",
+                                            "values": [
+                                                "gke-shrey-console-console-pool-7ef50d5a-i9v1"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "WS_ADDRESS",
+                                "value": "wss://twistlock-console:8084"
+                            },
+                            {
+                                "name": "DEFENDER_TYPE",
+                                "value": "cri"
+                            },
+                            {
+                                "name": "LOG_PROD",
+                                "value": "true"
+                            },
+                            {
+                                "name": "SYSTEMD_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "DOCKER_CLIENT_ADDRESS",
+                                "value": "/var/run/docker.sock"
+                            },
+                            {
+                                "name": "DEFENDER_CLUSTER_ID",
+                                "value": "5dc89b86-860b-5d0b-f4ca-841e72930d3a"
+                            },
+                            {
+                                "name": "DEFENDER_CLUSTER_NAME_RESOLVING_METHOD",
+                                "value": "default"
+                            },
+                            {
+                                "name": "DEFENDER_CLUSTER"
+                            },
+                            {
+                                "name": "MONITOR_SERVICE_ACCOUNTS",
+                                "value": "true"
+                            },
+                            {
+                                "name": "MONITOR_ISTIO",
+                                "value": "false"
+                            },
+                            {
+                                "name": "COLLECT_POD_LABELS",
+                                "value": "false"
+                            },
+                            {
+                                "name": "INSTALL_BUNDLE",
+                                "value": "eyJzZWNyZXRzIjp7fSwiZ2xvYmFsUHJveHlPcHQiOnsiaHR0cFByb3h5IjoiIiwibm9Qcm94eSI6IiIsImNhIjoiIiwidXNlciI6IiIsInBhc3N3b3JkIjp7ImVuY3J5cHRlZCI6IiJ9fSwibWljcm9zZWdDb21wYXRpYmxlIjpmYWxzZX0="
+                            },
+                            {
+                                "name": "HOST_CUSTOM_COMPLIANCE_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "CLOUD_HOSTNAME_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "FIPS_ENABLED",
+                                "value": "false"
+                            }
+                        ],
+                        "image": "registry-auth.twistlock.com/tw_wgdhemeo0dlxlflyhtmeob8uo4t1ffky/twistlock/defender:defender_33_01_137",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "twistlock-defender",
+                        "resources": {
+                            "limits": {
+                                "cpu": "900m",
+                                "memory": "512Mi"
+                            },
+                            "requests": {
+                                "cpu": "256m",
+                                "memory": "512Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "appArmorProfile": {
+                                "type": "Unconfined"
+                            },
+                            "capabilities": {
+                                "add": [
+                                    "NET_ADMIN",
+                                    "NET_RAW",
+                                    "SYS_ADMIN",
+                                    "SYS_PTRACE",
+                                    "SYS_CHROOT",
+                                    "MKNOD",
+                                    "SETFCAP",
+                                    "IPC_LOCK"
+                                ]
+                            },
+                            "privileged": false,
+                            "readOnlyRootFilesystem": true
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/lib/twistlock",
+                                "name": "data-folder"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock/certificates",
+                                "name": "certificates"
+                            },
+                            {
+                                "mountPath": "/var/run",
+                                "name": "docker-sock-folder"
+                            },
+                            {
+                                "mountPath": "/etc/passwd",
+                                "name": "passwd",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/dev/log",
+                                "name": "syslog-socket"
+                            },
+                            {
+                                "mountPath": "/var/lib/containerd",
+                                "name": "cri-data"
+                            },
+                            {
+                                "mountPath": "/var/lib/rancher/rke2/agent/containerd",
+                                "name": "cri-rke2-data"
+                            },
+                            {
+                                "mountPath": "/run",
+                                "name": "runc-proxy-sock-folder"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-bgndl",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirstWithHostNet",
+                "enableServiceLinks": true,
+                "hostNetwork": true,
+                "hostPID": true,
+                "nodeName": "gke-shrey-console-console-pool-7ef50d5a-i9v1",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "twistlock-service",
+                "serviceAccountName": "twistlock-service",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/disk-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/memory-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/pid-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/unschedulable",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/network-unavailable",
+                        "operator": "Exists"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "certificates",
+                        "secret": {
+                            "defaultMode": 256,
+                            "secretName": "twistlock-secrets"
+                        }
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/dev/log",
+                            "type": ""
+                        },
+                        "name": "syslog-socket"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/lib/twistlock",
+                            "type": ""
+                        },
+                        "name": "data-folder"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/etc/passwd",
+                            "type": ""
+                        },
+                        "name": "passwd"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/run",
+                            "type": ""
+                        },
+                        "name": "docker-sock-folder"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/lib/containerd",
+                            "type": ""
+                        },
+                        "name": "cri-data"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/lib/rancher/rke2/agent/containerd",
+                            "type": ""
+                        },
+                        "name": "cri-rke2-data"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/run",
+                            "type": ""
+                        },
+                        "name": "runc-proxy-sock-folder"
+                    },
+                    {
+                        "name": "kube-api-access-bgndl",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:51:21Z",
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:51:12Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:51:21Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:51:21Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:51:12Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "containerd://5427c991435f67be10b7f9ba92d2a78fb6a5236fc1cbb15f8024a86ec4ea5ce1",
+                        "image": "registry-auth.twistlock.com/tw_wgdhemeo0dlxlflyhtmeob8uo4t1ffky/twistlock/defender:defender_33_01_137",
+                        "imageID": "registry-auth.twistlock.com/tw_wgdhemeo0dlxlflyhtmeob8uo4t1ffky/twistlock/defender@sha256:2040b446c50da0c4a7be6e26582c4673a9269ed85e3de68e68ca7d1d865ac479",
+                        "lastState": {},
+                        "name": "twistlock-defender",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2025-03-20T02:51:20Z"
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/lib/twistlock",
+                                "name": "data-folder"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock/certificates",
+                                "name": "certificates"
+                            },
+                            {
+                                "mountPath": "/var/run",
+                                "name": "docker-sock-folder"
+                            },
+                            {
+                                "mountPath": "/etc/passwd",
+                                "name": "passwd",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            },
+                            {
+                                "mountPath": "/dev/log",
+                                "name": "syslog-socket"
+                            },
+                            {
+                                "mountPath": "/var/lib/containerd",
+                                "name": "cri-data"
+                            },
+                            {
+                                "mountPath": "/var/lib/rancher/rke2/agent/containerd",
+                                "name": "cri-rke2-data"
+                            },
+                            {
+                                "mountPath": "/run",
+                                "name": "runc-proxy-sock-folder"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-bgndl",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "10.128.0.64",
+                "hostIPs": [
+                    {
+                        "ip": "10.128.0.64"
+                    }
+                ],
+                "phase": "Running",
+                "podIP": "10.128.0.64",
+                "podIPs": [
+                    {
+                        "ip": "10.128.0.64"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "startTime": "2025-03-20T02:51:12Z"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "annotations": {
+                    "container.apparmor.security.beta.kubernetes.io/twistlock-defender": "unconfined"
+                },
+                "creationTimestamp": "2025-03-20T02:54:17Z",
+                "generateName": "twistlock-defender-ds-",
+                "labels": {
+                    "app": "twistlock-defender",
+                    "controller-revision-hash": "78854ddc76",
+                    "pod-template-generation": "1"
+                },
+                "name": "twistlock-defender-ds-zqxvv",
+                "namespace": "twistlock",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "DaemonSet",
+                        "name": "twistlock-defender-ds",
+                        "uid": "3404598d-bbbb-472b-9adb-84f6555b2aa0"
+                    }
+                ],
+                "resourceVersion": "109343378",
+                "uid": "fa9f591b-c279-42b8-988e-bf1d311b1621"
+            },
+            "spec": {
+                "affinity": {
+                    "nodeAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                            "nodeSelectorTerms": [
+                                {
+                                    "matchFields": [
+                                        {
+                                            "key": "metadata.name",
+                                            "operator": "In",
+                                            "values": [
+                                                "gke-shrey-console-console-pool-7ef50d5a-2uht"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "WS_ADDRESS",
+                                "value": "wss://twistlock-console:8084"
+                            },
+                            {
+                                "name": "DEFENDER_TYPE",
+                                "value": "cri"
+                            },
+                            {
+                                "name": "LOG_PROD",
+                                "value": "true"
+                            },
+                            {
+                                "name": "SYSTEMD_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "DOCKER_CLIENT_ADDRESS",
+                                "value": "/var/run/docker.sock"
+                            },
+                            {
+                                "name": "DEFENDER_CLUSTER_ID",
+                                "value": "5dc89b86-860b-5d0b-f4ca-841e72930d3a"
+                            },
+                            {
+                                "name": "DEFENDER_CLUSTER_NAME_RESOLVING_METHOD",
+                                "value": "default"
+                            },
+                            {
+                                "name": "DEFENDER_CLUSTER"
+                            },
+                            {
+                                "name": "MONITOR_SERVICE_ACCOUNTS",
+                                "value": "true"
+                            },
+                            {
+                                "name": "MONITOR_ISTIO",
+                                "value": "false"
+                            },
+                            {
+                                "name": "COLLECT_POD_LABELS",
+                                "value": "false"
+                            },
+                            {
+                                "name": "INSTALL_BUNDLE",
+                                "value": "eyJzZWNyZXRzIjp7fSwiZ2xvYmFsUHJveHlPcHQiOnsiaHR0cFByb3h5IjoiIiwibm9Qcm94eSI6IiIsImNhIjoiIiwidXNlciI6IiIsInBhc3N3b3JkIjp7ImVuY3J5cHRlZCI6IiJ9fSwibWljcm9zZWdDb21wYXRpYmxlIjpmYWxzZX0="
+                            },
+                            {
+                                "name": "HOST_CUSTOM_COMPLIANCE_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "CLOUD_HOSTNAME_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "FIPS_ENABLED",
+                                "value": "false"
+                            }
+                        ],
+                        "image": "registry-auth.twistlock.com/tw_wgdhemeo0dlxlflyhtmeob8uo4t1ffky/twistlock/defender:defender_33_01_137",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "twistlock-defender",
+                        "resources": {
+                            "limits": {
+                                "cpu": "900m",
+                                "memory": "512Mi"
+                            },
+                            "requests": {
+                                "cpu": "256m",
+                                "memory": "512Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "appArmorProfile": {
+                                "type": "Unconfined"
+                            },
+                            "capabilities": {
+                                "add": [
+                                    "NET_ADMIN",
+                                    "NET_RAW",
+                                    "SYS_ADMIN",
+                                    "SYS_PTRACE",
+                                    "SYS_CHROOT",
+                                    "MKNOD",
+                                    "SETFCAP",
+                                    "IPC_LOCK"
+                                ]
+                            },
+                            "privileged": false,
+                            "readOnlyRootFilesystem": true
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/lib/twistlock",
+                                "name": "data-folder"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock/certificates",
+                                "name": "certificates"
+                            },
+                            {
+                                "mountPath": "/var/run",
+                                "name": "docker-sock-folder"
+                            },
+                            {
+                                "mountPath": "/etc/passwd",
+                                "name": "passwd",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/dev/log",
+                                "name": "syslog-socket"
+                            },
+                            {
+                                "mountPath": "/var/lib/containerd",
+                                "name": "cri-data"
+                            },
+                            {
+                                "mountPath": "/var/lib/rancher/rke2/agent/containerd",
+                                "name": "cri-rke2-data"
+                            },
+                            {
+                                "mountPath": "/run",
+                                "name": "runc-proxy-sock-folder"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-grfm4",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirstWithHostNet",
+                "enableServiceLinks": true,
+                "hostNetwork": true,
+                "hostPID": true,
+                "nodeName": "gke-shrey-console-console-pool-7ef50d5a-2uht",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "twistlock-service",
+                "serviceAccountName": "twistlock-service",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/disk-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/memory-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/pid-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/unschedulable",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/network-unavailable",
+                        "operator": "Exists"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "certificates",
+                        "secret": {
+                            "defaultMode": 256,
+                            "secretName": "twistlock-secrets"
+                        }
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/dev/log",
+                            "type": ""
+                        },
+                        "name": "syslog-socket"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/lib/twistlock",
+                            "type": ""
+                        },
+                        "name": "data-folder"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/etc/passwd",
+                            "type": ""
+                        },
+                        "name": "passwd"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/run",
+                            "type": ""
+                        },
+                        "name": "docker-sock-folder"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/lib/containerd",
+                            "type": ""
+                        },
+                        "name": "cri-data"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/var/lib/rancher/rke2/agent/containerd",
+                            "type": ""
+                        },
+                        "name": "cri-rke2-data"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/run",
+                            "type": ""
+                        },
+                        "name": "runc-proxy-sock-folder"
+                    },
+                    {
+                        "name": "kube-api-access-grfm4",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:54:25Z",
+                        "status": "True",
+                        "type": "PodReadyToStartContainers"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:54:17Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:54:25Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:54:25Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2025-03-20T02:54:17Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "containerd://42bac5aa2af97ffda84f5f5801f2f5f83b45fd531fef2fcf5511f10d5238354a",
+                        "image": "registry-auth.twistlock.com/tw_wgdhemeo0dlxlflyhtmeob8uo4t1ffky/twistlock/defender:defender_33_01_137",
+                        "imageID": "registry-auth.twistlock.com/tw_wgdhemeo0dlxlflyhtmeob8uo4t1ffky/twistlock/defender@sha256:2040b446c50da0c4a7be6e26582c4673a9269ed85e3de68e68ca7d1d865ac479",
+                        "lastState": {},
+                        "name": "twistlock-defender",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2025-03-20T02:54:24Z"
+                            }
+                        },
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/lib/twistlock",
+                                "name": "data-folder"
+                            },
+                            {
+                                "mountPath": "/var/lib/twistlock/certificates",
+                                "name": "certificates"
+                            },
+                            {
+                                "mountPath": "/var/run",
+                                "name": "docker-sock-folder"
+                            },
+                            {
+                                "mountPath": "/etc/passwd",
+                                "name": "passwd",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            },
+                            {
+                                "mountPath": "/dev/log",
+                                "name": "syslog-socket"
+                            },
+                            {
+                                "mountPath": "/var/lib/containerd",
+                                "name": "cri-data"
+                            },
+                            {
+                                "mountPath": "/var/lib/rancher/rke2/agent/containerd",
+                                "name": "cri-rke2-data"
+                            },
+                            {
+                                "mountPath": "/run",
+                                "name": "runc-proxy-sock-folder"
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-grfm4",
+                                "readOnly": true,
+                                "recursiveReadOnly": "Disabled"
+                            }
+                        ]
+                    }
+                ],
+                "hostIP": "10.128.0.89",
+                "hostIPs": [
+                    {
+                        "ip": "10.128.0.89"
+                    }
+                ],
+                "phase": "Running",
+                "podIP": "10.128.0.89",
+                "podIPs": [
+                    {
+                        "ip": "10.128.0.89"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "startTime": "2025-03-20T02:54:17Z"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}
