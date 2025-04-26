@@ -4,8 +4,8 @@ import json
 import zipfile
 
 # Define output directories
-OUTPUT_DIR = "twistlock_diagnostics"
-NAMESPACE = "kube-system"
+OUTPUT_DIR = "Diagnostics"
+NAMESPACE = input("Enter the namespace: ")
 def run_kubectl_command(command):
     """Run a kubectl command and return the output"""
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -107,7 +107,7 @@ def main():
     #Get the pods in the namespace
     twistlock_pods = get_twistlock_pods()
     if not twistlock_pods:
-        print("No twistlock pods found in the namespace.")
+        print("No pods found in the mentioned namespace.")
         return 
     for pod in twistlock_pods:
         print(f"Processing pod: {pod}")
