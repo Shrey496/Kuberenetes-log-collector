@@ -6,23 +6,38 @@ import zipfile
 # Define output directories
 OUTPUT_DIR = "Diagnostics"
 NAMESPACE = input("Enter the namespace: ")
+
 def run_kubectl_command(command):
     """Run a kubectl command and return the output"""
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    
     # result.returncode -- exit status of the process (0 for success, nonzero for failure)
+    # print(f"Return code: {result.returncode}")
     if result.returncode == 0:
         return result.stdout.strip()
     else:
         return f"Error: {result.stderr.strip()}"
+    
+def namespace_exists():
+    result = run_kubectl_command(f"kubectl get ns {NAMESPACE}")
+    if "Error" in result:
+        print(result)
+        return False
+    else:
+        return True
+
 def get_twistlock_pods():
+
     """Retrieve all pods in the twistlock namespace"""
-    # print(NAMESPACE)
     pods_json = run_kubectl_command(f"kubectl get pods -n {NAMESPACE} -o json")
+    
     #print("Printing from the get_twistlock_pods function -- pods_json: ", pods_json)
     try:
         pod_list = []
-        #converting json to a dictionary
+       
+       #converting json to a dictionary
         pod_data = json.loads(pods_json)
+        
         #parsing the dictionary
         for p in pod_data["items"]:
             if p["metadata"]["name"]:
@@ -70,7 +85,15 @@ def exec_into_pod_and_fetch_logs(pod_name):
     
     #cat will copy the contents of the provided log_path to the filepath created (localpath)
     command = f"kubectl exec {pod_name} -n {NAMESPACE} -- cat {log_path} > {local_path}"  
-    subprocess.run(command, shell=True, check=False)        
+    subprocess.run(command, shell=True, check=False)  
+
+def pod_logs(pod_name):
+    LOGS_DIR = os.path.join(OUTPUT_DIR, pod_name)
+    os.makedirs(LOGS_DIR, exist_ok=True)
+
+    local_path = os.path.join(LOGS_DIR, f"{pod_name}.log")
+
+    logs_pod = run_kubectl_command(f"kubectl logs {pod_name} -n {NAMESPACE} > {local_path}")
 
 def check_resources(pod_name):
     """Check resource capacity and usage of individual pods and nodes"""
@@ -104,21 +127,23 @@ def check_resources(pod_name):
 #                 zipf.write(file_path, os.path.relpath(file_path, OUTPUT_DIR))
 #     print(f"Zipped all results into {zip_filename}")
 def main():
-    #Get the pods in the namespace
-    twistlock_pods = get_twistlock_pods()
-    if not twistlock_pods:
-        print("No pods found in the mentioned namespace.")
-        return 
-    for pod in twistlock_pods:
-        print(f"Processing pod: {pod}")
-        pod_info = collect_pod_details(pod)
-       
-        # Save pod details to JSON file
-        # with open(os.path.join(LOGS_DIR, f"{pod}_details.json"), "w") as f:
-        #     json.dump(pod_info, f, indent=4)
-        # exec_into_pod_and_fetch_logs(pod)
-        check_resources(pod)
-    get_twistlock_daemonset()
-    # zip_results()
+    
+    #Check if the namespace input is valid
+    if namespace_exists():
+    
+        #Get the pods in the namespace
+        twistlock_pods = get_twistlock_pods()
+        if not twistlock_pods:
+            print("No pods found in the mentioned namespace.")
+            return
+        for pod in twistlock_pods:
+            print(f"Processing pod: {pod}")
+            pod_info = collect_pod_details(pod)
+            if NAMESPACE == "twistlock":
+                exec_into_pod_and_fetch_logs(pod)
+                get_twistlock_daemonset()
+            check_resources(pod)
+            pod_logs(pod)
+        # zip_results()
 if __name__ == "__main__":
     main()

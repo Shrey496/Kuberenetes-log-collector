@@ -1,8 +1,0 @@
-
-=== pod_stats ===
-NAME                                  READY   STATUS    RESTARTS   AGE   IP          NODE                                             NOMINATED NODE   READINESS GATES
-event-exporter-gke-69d9b8fddc-l628r   2/2     Running   0          10h   10.44.0.4   gke-aamir-defenders-default-pool-e573c1b7-nw9f   <none>           <none>
-
-=== pod_resources ===
-NAME                                  CPU(cores)   MEMORY(bytes)   
-event-exporter-gke-69d9b8fddc-l628r   1m           22Mi
