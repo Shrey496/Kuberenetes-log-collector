@@ -1,7 +1,4 @@
-#Collect pod details function to check for pod logs
 #Directory structure to avoid redundant code
-#zip files function
-
 import os
 import subprocess
 import json
@@ -54,10 +51,7 @@ def get_pods():
 #Collect pod details with the help of common kubectl commands  
 def collect_pod_details(pod_name):
 
-    pod_info = {
-        "describe": run_kubectl_command(f"kubectl describe pod {pod_name} -n {NAMESPACE}"),
-        # "logs": run_kubectl_command(f"kubectl logs {pod_name} -n {NAMESPACE}"),
-    }
+    pod_info = { "describe": run_kubectl_command(f"kubectl describe pod {pod_name} -n {NAMESPACE}") }
     pod_json = run_kubectl_command(f"kubectl get pod {pod_name} -n {NAMESPACE} -o json")
     
     # if pod_json.startswith("Error"):
@@ -135,15 +129,15 @@ def check_resources(pod_name):
             f.write(f"\n=== {key} ===\n{value}\n")
 
 
-# def zip_results():
-#     """Zip all collected data"""
-#     zip_filename = "twistlock_diagnostics.zip"
-#     with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zipf:
-#         for root, _, files in os.walk(OUTPUT_DIR):
-#             for file in files:
-#                 file_path = os.path.join(root, file)
-#                 zipf.write(file_path, os.path.relpath(file_path, OUTPUT_DIR))
-#     print(f"Zipped all results into {zip_filename}")
+def zip_results():
+    """Zip all collected data"""
+    zip_filename = "Diagnostics.zip"
+    with zipfile.ZipFile(zip_filename, "w", zipfile.ZIP_DEFLATED) as zipf:
+        for root, _, files in os.walk(OUTPUT_DIR):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zipf.write(file_path, os.path.relpath(file_path, OUTPUT_DIR))
+    print(f"Zipped all results into {zip_filename}")
 
 def main():
     
@@ -165,6 +159,6 @@ def main():
                 get_twistlock_daemonset()
             check_resources(pod)
             pod_logs(pod)
-        # zip_results()
+        zip_results()
 if __name__ == "__main__":
     main()
