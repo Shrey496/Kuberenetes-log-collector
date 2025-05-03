@@ -12,8 +12,9 @@ This project consists of a script written in Python which serves as tool for col
 # Working:
 
 * I have used GKE in order to test this tool, however, the tool works with all platforms that use “kubectl”. Navigating to GCP > Kubernetes engine > Clusters
- 
-  <img width="492" alt="Screenshot 2025-05-03 at 2 34 29 PM" src="https://github.com/user-attachments/assets/c18346bc-d988-4c5c-9d87-98907e15eb70" />
+
+
+<img width="492" alt="Screenshot 2025-05-03 at 2 34 29 PM" src="https://github.com/user-attachments/assets/c18346bc-d988-4c5c-9d87-98907e15eb70" />
 
   
 * Click on the Connect to the cluster to copy the gcloud command-line access command in order to connect to the cluster using the terminal (first ensure that gcloud SDK is installed locally)
