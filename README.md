@@ -15,7 +15,7 @@ This project consists of a script written in Python which serves tool  
     <img width="536" alt="Screenshot 2025-05-03 at 2 35 13 PM" src="https://github.com/user-attachments/assets/2d827ddf-c921-40d8-9d77-a371cd666671" />
 
 
-* Listing the active pods in the **kube-system namespace and “twistlock” namespace
+* Listing the active pods in the *kube-system* namespace and “twistlock” namespace
 
     <img width="538" alt="Screenshot 2025-05-03 at 2 35 36 PM" src="https://github.com/user-attachments/assets/ddae8915-a832-4a69-9962-ec0fe7526719" />
     <img width="540" alt="Screenshot 2025-05-03 at 2 36 10 PM" src="https://github.com/user-attachments/assets/8d2211a1-0f6f-4d81-9cac-0583083724a7" />
