@@ -13,23 +13,27 @@ This project consists of a script written in Python which serves as tool for col
 
 * I have used GKE in order to test this tool, however, the tool works with all platforms that use “kubectl”. Navigating to GCP > Kubernetes engine > Clusters
 
+ 
 
 <img width="492" alt="Screenshot 2025-05-03 at 2 34 29 PM" src="https://github.com/user-attachments/assets/c18346bc-d988-4c5c-9d87-98907e15eb70" />
 
   
 * Click on the Connect to the cluster to copy the gcloud command-line access command in order to connect to the cluster using the terminal (first ensure that gcloud SDK is installed locally)
 
+
     <img width="536" alt="Screenshot 2025-05-03 at 2 35 13 PM" src="https://github.com/user-attachments/assets/2d827ddf-c921-40d8-9d77-a371cd666671" />
 
 
 * Listing the active pods in the **kube-system** namespace and **twistlock** namespace
+
 
     <img width="538" alt="Screenshot 2025-05-03 at 2 35 36 PM" src="https://github.com/user-attachments/assets/ddae8915-a832-4a69-9962-ec0fe7526719" />
     <img width="540" alt="Screenshot 2025-05-03 at 2 36 10 PM" src="https://github.com/user-attachments/assets/8d2211a1-0f6f-4d81-9cac-0583083724a7" />
 
 
 * Once we run the script it should ask for a user input for **namespace**. The namespace if invalid, will display the exact error message from the terminal’s output. Now, listing down the available namespace in the cluster  
-    <img width="499" alt="Screenshot 2025-05-03 at 2 37 35 PM" src="https://github.com/user-attachments/assets/ebbcbc2a-e9b3-43b3-995f-f2bf0a99f56b" />
+
+     <img width="499" alt="Screenshot 2025-05-03 at 2 37 35 PM" src="https://github.com/user-attachments/assets/ebbcbc2a-e9b3-43b3-995f-f2bf0a99f56b" />
 
 * Starting with a non-twistlock namespace which has a few pods running in it, **ns: gmp-system**
   **Note:** The emphasis on a **non-twistlock namespace** is provided because the tool has an additional capability when working with pods in the **twistlock** namespace
