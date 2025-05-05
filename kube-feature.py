@@ -1,4 +1,3 @@
-#Directory structure to avoid redundant code
 import os
 import subprocess
 import json
